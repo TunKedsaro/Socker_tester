@@ -32,7 +32,7 @@ try:
         print(f"Received from app1: {data.decode()}")
 
         # Respond to app1
-        conn.sendall("Hello from app2! Keep chatting!".encode())  # ->
+        conn.sendall("Hello from app2! Keep chatting! 555555555555555555".encode())  # ->
 
 except Exception as e:
     print(f"Error occurred: {e}")

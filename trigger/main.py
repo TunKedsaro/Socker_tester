@@ -49,8 +49,8 @@ import time
 from random import randint
 
 # Setup TCP socket client
-HOST = 'app2'  # This will be the service name of app2 in Kubernetes
-PORT = 5001  # Port to connect to
+HOST2 = 'app2'  # This will be the service name of app2 in Kubernetes
+PORT2 = 5001  # Port to connect to
 
 # Create a socket object
 client_socket = socket.socket(
@@ -58,10 +58,21 @@ client_socket = socket.socket(
     socket.SOCK_STREAM
     )
 
+HOST1 = 'app1'
+PORT1 = 5001
+client_socket2 = socket.socket(
+    socket.AF_INET,
+    socket.SOCK_STREAM
+)
+
 try:
     # Connect to app2 server
-    print(f"Connecting to {HOST} on port {PORT}...")
-    client_socket.connect((HOST, PORT))
+    print(f"Connecting to {HOST2} on port {PORT2}...")
+    client_socket.connect((HOST2, PORT2))
+    print("Connected to app2.")
+
+    print(f"Connecting to {HOST1} on port {PORT1}...")
+    client_socket2.connect((HOST1, PORT1))
     print("Connected to app2.")
 
     # Infinite loop to send messages to app2 and keep receiving responses
@@ -87,6 +98,11 @@ try:
         print(f"Received from app2: {response.decode()}")
         # time.sleep(5)
 
+        client_socket2.sendall(message.encode())   # ->
+        print("SENDING2")
+
+        response = client_socket2.recv(1024) # <-
+        print(f"Received from app1: {response.decode()}")
 
 except socket.error as e:
     print(f"Socket error occurred: {e}")
