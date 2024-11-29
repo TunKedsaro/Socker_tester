@@ -85,6 +85,7 @@ try:
             print("No response received, server may have closed the connection.")
             break  # If no data is received, break the loop (connection might have been closed)
         print(f"Received from app2: {response.decode()}")
+        # time.sleep(5)
 
 
 except socket.error as e:
