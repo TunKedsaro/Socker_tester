@@ -7,9 +7,26 @@ services:
     networks:
       - app-network
     depends_on:
-      - app2  # รอให้ app2 พร้อมก่อน
+      - app2
+      - app1  # เพิ่ม app1
     ports:
-      - "5000:5000"  # เปิดพอร์ตสำหรับทดสอบ
+      - "5000:5000"  # เปิดพอร์ตสำหรับทดสอบ  
+    restart: always
+  
+  app1:
+    build:
+      context: ./app1
+    container_name: app1
+    networks:
+      - app-network
+    ports:
+      - "5002:5001"  # พอร์ตภายนอก 5002 เชื่อมกับพอร์ตภายใน 5001
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5001"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
   
   app2:
     build:
@@ -18,7 +35,13 @@ services:
     networks:
       - app-network
     ports:
-      - "5001:5001"  # เปิดพอร์ตสำหรับทดสอบ
+      - "5001:5001"  # พอร์ตภายนอก 5001 เชื่อมกับพอร์ตภายใน 5001
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5001"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
 networks:
   app-network:

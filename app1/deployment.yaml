@@ -2,10 +2,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: app2-service  # ชื่อ Service
+  name: app1-service  # ชื่อ Service
 spec:
   selector:
-    app: app2         # เชื่อมโยงกับ Pod ที่มี label app=app2
+    app: app1         # เชื่อมโยงกับ Pod ที่มี label app=app1
   ports:
     - protocol: TCP
       port: 5001      # พอร์ตที่ Service เปิด
@@ -17,20 +17,20 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app2          # ชื่อ Deployment
+  name: app1          # ชื่อ Deployment
 spec:
   replicas: 1         # จำนวน Pod
   selector:
     matchLabels:
-      app: app2       # เลือก Pod ที่มี label app=app2
+      app: app1       # เลือก Pod ที่มี label app=app1
   template:
     metadata:
       labels:
-        app: app2     # กำหนด label ให้ Pod
+        app: app1     # กำหนด label ให้ Pod
     spec:
       containers:
-      - name: app2    # ชื่อคอนเทนเนอร์
-        image: app2:1.0.1  # ชื่อ Image ที่จะใช้
+      - name: app1    # ชื่อคอนเทนเนอร์
+        image: app1:1.0.1  # ชื่อ Image ที่จะใช้
         imagePullPolicy: IfNotPresent  # ดึง Image ใหม่หากไม่มีใน Local
         ports:
         - containerPort: 5001  # พอร์ตภายใน Container
