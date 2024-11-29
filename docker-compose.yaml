@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  app1:
+    build:
+      context: ./app1
+    container_name: app1
+    networks:
+      - app-network
+    depends_on:
+      - app2  # รอให้ app2 พร้อมก่อน
+    ports:
+      - "5000:5000"  # เปิดพอร์ตสำหรับทดสอบ
+  
+  app2:
+    build:
+      context: ./app2
+    container_name: app2
+    networks:
+      - app-network
+    ports:
+      - "5001:5001"  # เปิดพอร์ตสำหรับทดสอบ
+
+networks:
+  app-network:
+    driver: bridge
