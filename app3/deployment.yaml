@@ -2,14 +2,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: app2-service  # ชื่อ Service
+  name: app3-service  # ชื่อ Service
 spec:
   selector:
-    app: app2         # เชื่อมโยงกับ Pod ที่มี label app=app2
+    app: app3         # เชื่อมโยงกับ Pod ที่มี label app=app2
   ports:
     - protocol: TCP
-      port: 5002      # พอร์ตที่ Service เปิด
-      targetPort: 5002  # พอร์ตที่ Pod ใช้งาน
+      port: 5003      # พอร์ตที่ Service เปิด
+      targetPort: 5003  # พอร์ตที่ Pod ใช้งาน
   type: ClusterIP     # Service นี้สามารถเข้าถึงได้ภายในคลัสเตอร์เท่านั้น
 
 ---
@@ -17,20 +17,20 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app2          # ชื่อ Deployment
+  name: app3          # ชื่อ Deployment
 spec:
   replicas: 1         # จำนวน Pod
   selector:
     matchLabels:
-      app: app2       # เลือก Pod ที่มี label app=app2
+      app: app3       # เลือก Pod ที่มี label app=app2
   template:
     metadata:
       labels:
-        app: app2     # กำหนด label ให้ Pod
+        app: app3     # กำหนด label ให้ Pod
     spec:
       containers:
-      - name: app2    # ชื่อคอนเทนเนอร์
-        image: app2:1.0.1  # ชื่อ Image ที่จะใช้
+      - name: app3    # ชื่อคอนเทนเนอร์
+        image: app3:1.0.1  # ชื่อ Image ที่จะใช้
         imagePullPolicy: IfNotPresent  # ดึง Image ใหม่หากไม่มีใน Local
         ports:
-        - containerPort: 5002  # พอร์ตภายใน Container
+        - containerPort: 5003  # พอร์ตภายใน Container

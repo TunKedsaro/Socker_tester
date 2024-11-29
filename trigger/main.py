@@ -50,7 +50,7 @@ from random import randint
 
 # Setup TCP socket client
 HOST2 = 'app2'  # This will be the service name of app2 in Kubernetes
-PORT2 = 5001  # Port to connect to
+PORT2 = 5002  # Port to connect to
 
 # Create a socket object
 client_socket = socket.socket(
@@ -61,6 +61,13 @@ client_socket = socket.socket(
 HOST1 = 'app1'
 PORT1 = 5001
 client_socket2 = socket.socket(
+    socket.AF_INET,
+    socket.SOCK_STREAM
+)
+
+HOST3 = 'app3'
+PORT3 = 5003
+client_socket3 = socket.socket(
     socket.AF_INET,
     socket.SOCK_STREAM
 )
@@ -100,9 +107,14 @@ try:
 
         client_socket2.sendall(message.encode())   # ->
         print("SENDING2")
-
         response = client_socket2.recv(1024) # <-
-        print(f"Received from app1: {response.decode()}")
+        print(f"Received from app1: {response.decode()}")        
+        
+        
+        client_socket3.sendall(message.encode())   # ->
+        print("SENDING3")
+        response = client_socket3.recv(1024) # <-
+        print(f"Received from app3: {response.decode()}")
 
 except socket.error as e:
     print(f"Socket error occurred: {e}")

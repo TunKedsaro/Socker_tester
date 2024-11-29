@@ -44,14 +44,13 @@ import socket
 
 # Setup a TCP socket server
 HOST = '0.0.0.0'  # Listen on all available interfaces
-PORT = 5001  # Port to listen on
+PORT = 5002  # Port to listen on
 
 # Create a socket object
 server_socket = socket.socket(
     socket.AF_INET, 
     socket.SOCK_STREAM
     )
-
 
 try:
     # Bind the socket to the address and port

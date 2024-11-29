@@ -41,6 +41,21 @@ services:
       test: ["CMD", "curl", "-f", "http://localhost:5001"]
       interval: 30s
       timeout: 10s
+      retries: 5  
+      
+  app3:
+    build:
+      context: ./app3
+    container_name: app3
+    networks:
+      - app-network
+    ports:
+      - "5003:5001"  # พอร์ตภายนอก 5001 เชื่อมกับพอร์ตภายใน 5001
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5001"]
+      interval: 30s
+      timeout: 10s
       retries: 5
 
 networks:
